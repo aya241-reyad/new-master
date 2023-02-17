@@ -1,0 +1,172 @@
+﻿@model Taisser.Manager.PaggingManger<Miar.Models.RealState>
+
+@{
+    ViewData["Title"] = "العروض";
+}
+
+
+<div class="col mt-4 col-lg-9 mx-auto" dir="rtl" style="text-align:right">
+    <div class="card bg-default shadow" id="AllMembersCard">
+        <div class="card-header bg-transparent border-0">
+            <div class="row">
+                <h3 style="font-family:'Cairo-SemiBold'; " class="text-dark mb-0">العروض</h3>
+                <a asp-action="Create" class="btn btn-primary  active" role="button" style="left:0;margin-right:auto" aria-pressed="true">أضافه عقار</a>
+
+            </div>
+
+
+        </div>
+
+        @if (User.IsInRole("Admin"))
+        {
+            <input hidden readonly disabled id="UserRole" value="Admin" />
+
+        }
+        else if (User.IsInRole("User"))
+        {
+            <input hidden readonly disabled id="UserRole" value="User" />
+
+        }
+        <div class="table-responsive">
+            <table class="table" dir="rtl" id="TestsTable">
+                <thead>
+                    <tr>
+                        <th>
+                            العنوان
+                        </th>
+                        <th>
+                            الصوره
+                        </th>
+                        <th>
+                            الوصف
+                        </th>
+
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Title)
+                            </td>
+                            
+                            <td>
+                                <a target="_blank" href="~/img/States/@Html.DisplayFor(modelItem => item.ImgName)">اضغط لعرض الصوره</a>
+                                
+                            </td>
+ 
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Discription)
+                            </td>
+                            <td>
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    @Html.ActionLink("عرض", "Details", new { id = item.Key });<span> | </span>
+                                    @Html.ActionLink("تعديل", "Edit", new { id = item.Key });<span> | </span>
+                                    @Html.ActionLink("حذف", "Delete", new { id = item.Key }, new { @class = "text-danger" });
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="card-footer d-flex  bg-transparent">
+            <ul class="pagination" style=" padding-right: 0; ">
+
+                <li class="page-item  disabled " id="previes">
+                    <a aria-label="Previous" class="page-link">
+                        <span aria-hidden="true">
+                            <img src="~/img/angle-right-olid.svg" />
+                        </span>
+                    </a>
+                </li>
+                @for (int i = 0; i < @ViewBag.PagesNum; i++)
+                {
+                    if (i == 0)
+                    {
+                        <li class="page-item active PageNumber " id="@(i+1)"><a class="page-link">@(i + 1)</a></li>
+
+                    }
+                    else
+                    {
+                        if ((i + 1) > 10)
+                        {
+
+                            <li class="page-item" id="SeeMore"><a class="page-link">...</a></li>
+                            <li class="page-item PageNumber" id="@ViewBag.PagesNum"><a class="page-link">@ViewBag.PagesNum</a></li>
+                            break;
+
+                        }
+
+
+                        <li class="page-item PageNumber" id="@(i+1)"><a class="page-link">@(i + 1)</a></li>
+
+                    }
+
+                }
+
+                @if (@ViewBag.PagesNum > 1)
+                {
+                    <li class="page-item" id="Next">
+                        <a aria-label="Next" class="page-link">
+                            <span aria-hidden="true">
+                                <img src="~/img/angle-left-solid.svg" />
+                            </span>
+                        </a>
+                    </li>
+                }
+                else
+                {
+                    <li class="page-item disabled" id="Next">
+                        <a aria-label="Next" class="page-link">
+                            <span aria-hidden="true">
+                                <img src="~/img/angle-left-solid.svg" />
+                            </span>
+                        </a>
+                    </li>
+
+                }
+                <li class="TableControl">
+                    <span>
+                        <span style="">عرض</span>
+
+
+                        <input id="CountShow" class="form-control" type="tel" style="width: 50px; margin-right: 5px; height: 20px; display: unset" value="5" />
+                    </span>
+                </li>
+                <li class="TableControl">
+                    <span>
+                        <span id="TotalCount">@ViewBag.TotalNum</span>
+                        /
+                        @if (@ViewBag.PagesNum > 1)
+                        {
+                            <span id="CurrentCount"> 5</span>
+
+                        }
+                        else
+                        { <span id="CurrentCount"> @ViewBag.TotalNum</span>
+                    }
+
+
+
+                    </span>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+@section scripts {
+    <script src="~/js/PaggingTabel.js"></script>
+
+    <script src="~/js/RealState.js"></script>
+
+}

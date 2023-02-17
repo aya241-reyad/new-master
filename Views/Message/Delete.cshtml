@@ -1,0 +1,71 @@
+﻿@model Miar.Models.Messages
+
+@{
+    ViewData["Title"] = "حذف رساله";
+}
+<div class="col-lg-9 mx-auto mt-2"  dir="rtl" style="text-align:right">
+    <div class="card" style="background-color: #172b4d">
+        <div class="card-header bg-transparent border-0">
+            <h3 class=" mb-0 text-white">الرساله</h3>
+
+        </div>
+
+        <div class="card-body" dir="rtl">
+            <div class="row">
+                <div class="col-md-12">
+                    <form asp-action="Delete">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <!--TestName   -->
+                        <div class="row">
+                            <div class="form-group col-lg-12">
+                                <label asp-for="Name" class="control-label text-white"></label>
+                                <input disabled asp-for="Name" class="form-control " />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                        </div>
+
+
+                        <!-- Name  PassportNumber -->
+                        <div class="row">
+
+                            <div class="form-group col-lg-6">
+                                <label asp-for="Tele" class="control-label text-white"></label>
+                                <input disabled asp-for="Tele" class="form-control " />
+                                <span asp-validation-for="Tele" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label asp-for="EnterDate" class="control-label text-white"></label>
+                                <input disabled asp-for="EnterDate" class="form-control " />
+                                <span asp-validation-for="EnterDate" class="text-danger"></span>
+                            </div>
+
+                        </div>
+
+
+                        <!-- Gender  Location -->
+                        <div class="row">
+
+                            <div class="form-group col-lg-12">
+                                <label asp-for="Message" class="control-label text-white"></label>
+                                <textarea disabled asp-for="Message" class="form-control "></textarea>
+                                <span asp-validation-for="Message" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <h4 class="text-danger">هل انت متاكد من الحذف ؟</h4>
+                            <input id="submitbtn" type="submit" value="حـذف" class="btn btn-danger" style="width:100%" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+@section Scripts {
+}
